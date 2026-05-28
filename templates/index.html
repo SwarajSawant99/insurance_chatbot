@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Policy Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Insurance Policy Assistant</h1>
+        <p>Select the insurance chatbot you want to use</p>
+
+        <div class="option-box">
+            <a href="/chat/health">
+                <button class="health-btn">Health Insurance</button>
+            </a>
+
+            <a href="/chat/car">
+                <button class="car-btn">Car Insurance</button>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

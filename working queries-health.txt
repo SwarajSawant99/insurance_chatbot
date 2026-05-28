@@ -1,0 +1,19 @@
+health queries
+- list diseases with waiting period
+- what is covered for new born
+-provide details of psychiatric treatment
+-provide details of annual health checkup
+-provide details on maternity benefits
+- provide details on personal accident cover
+- provide details of standard exclusions
+- is cosmetic surgery covered
+- is change of gender covered
+- provide details of specific exclusions
+-provide details on portability
+- Myocardial Infarction (First Heart Attack of specific
+severity)
+
+CHECKLIST RELATED
+- provide document checklist for renewals
+- provide document checklist for endorsements
+- provide detailed document checklist for new & rollover

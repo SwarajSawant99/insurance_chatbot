@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ insurance_type }} Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>{{ insurance_type.capitalize() }} Insurance Chatbot</h1>
+
+        <div id="chat-box"></div>
+
+        <input type="text" id="user-input"
+               placeholder="Type your question..."
+               onkeypress="handleKeyPress(event)">
+
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const insuranceType = "{{ insurance_type }}";
+
+        // Handle Enter key
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById("user-input");
+            const chatBox = document.getElementById("chat-box");
+
+            const query = input.value.trim();
+
+            if (!query) return;
+
+            // user message
+            chatBox.innerHTML += `
+                <div style="text-align:right; margin:10px;">
+                    <b>You:</b> ${query}
+                </div>
+            `;
+
+            input.value = "";
+
+            // loading
+            chatBox.innerHTML += `
+                <div id="loading" style="margin:10px;">
+                    <b>Bot:</b> Thinking...
+                </div>
+            `;
+
+            try {
+                const response = await fetch("/ask", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        insurance_type: insuranceType
+                    })
+                });
+
+                const data = await response.json();
+
+                // remove loading
+                document.getElementById("loading").remove();
+
+                // bot response
+                chatBox.innerHTML += `
+                    <div style="margin:10px;">
+                        <b>Bot:</b> ${data.answer.replace(/\n/g, "<br>")}
+                    </div>
+                `;
+
+            } catch (error) {
+                document.getElementById("loading").remove();
+
+                chatBox.innerHTML += `
+                    <div style="margin:10px; color:red;">
+                        <b>Bot:</b> Error while fetching response.
+                    </div>
+                `;
+            }
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>
