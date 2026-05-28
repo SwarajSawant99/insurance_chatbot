@@ -50,12 +50,15 @@ def ask():
         query = data.get("query")
         insurance_type = data.get("insurance_type")
 
+        print("===================================")
         print("Question:", query)
         print("Insurance Type:", insurance_type)
 
         # =========================
         # LOAD RETRIEVER
         # =========================
+
+        print("Loading retriever...")
 
         if insurance_type == "health":
 
@@ -77,26 +80,40 @@ def ask():
                 "answer": "Invalid insurance type selected."
             })
 
+        print("Retriever loaded successfully")
+
         # =========================
         # LOAD GENERATOR
         # =========================
 
+        print("Loading generator...")
+
         generator = GroqGenerator(API_KEY)
+
+        print("Generator loaded successfully")
 
         # =========================
         # SEARCH DOCUMENT
         # =========================
 
+        print("Searching document...")
+
         results = retriever.search(query)
+
+        print("Search completed")
 
         # =========================
         # GENERATE ANSWER
         # =========================
 
+        print("Generating answer...")
+
         answer = generator.generate_answer(
             query,
             results
         )
+
+        print("Answer generated successfully")
 
         return jsonify({
             "answer": answer
@@ -104,10 +121,13 @@ def ask():
 
     except Exception as e:
 
-        print("ERROR:", str(e))
+        print("===================================")
+        print("BACKEND ERROR:")
+        print(str(e))
+        print("===================================")
 
         return jsonify({
-            "answer": f"Backend Error: {str(e)}"
+            "answer": str(e)
         })
 
 
