@@ -9,7 +9,7 @@ class Retriever:
         print("Loading retriever...")
 
         # embedding model
-        self.model = SentenceTransformer("all-MiniLM-L6-v2")
+        self.model = SentenceTransformer("paraphrase-MiniLM-L3-v2")
 
         # load faiss index
         self.index = faiss.read_index(index_path)
