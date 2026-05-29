@@ -2,12 +2,14 @@ from flask import Flask, render_template, request, jsonify
 from rag.retriever import Retriever
 from rag.generator import GroqGenerator
 import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
 # =========================
 # ENV VARIABLES
 # =========================
+load_dotenv()
 
 API_KEY = os.getenv("GROQ_API_KEY")
 
