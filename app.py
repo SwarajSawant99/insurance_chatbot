@@ -45,6 +45,8 @@ def chat(insurance_type):
 @app.route("/ask", methods=["POST"])
 def ask():
 
+    print("ASK ROUTE HIT")
+
     try:
 
         data = request.get_json()
@@ -60,7 +62,7 @@ def ask():
         # LOAD RETRIEVER
         # =========================
 
-        print("Loading retriever...")
+        print("Creating retriever...")
 
         if insurance_type == "health":
 
@@ -82,27 +84,28 @@ def ask():
                 "answer": "Invalid insurance type selected."
             })
 
-        print("Retriever loaded successfully")
+        print("RETRIEVER CREATED")
 
         # =========================
         # LOAD GENERATOR
         # =========================
 
-        print("Loading generator...")
+        print("Creating generator...")
 
         generator = GroqGenerator(API_KEY)
 
-        print("Generator loaded successfully")
+        print("GENERATOR CREATED")
 
         # =========================
-        # SEARCH DOCUMENT
+        # SEARCH
         # =========================
 
-        print("Searching document...")
+        print("Starting search...")
 
         results = retriever.search(query)
 
-        print("Search completed")
+        print("SEARCH COMPLETED")
+        print(f"Retrieved {len(results)} chunks")
 
         # =========================
         # GENERATE ANSWER
@@ -115,7 +118,8 @@ def ask():
             results
         )
 
-        print("Answer generated successfully")
+        print("ANSWER GENERATED")
+        print("RETURNING RESPONSE")
 
         return jsonify({
             "answer": answer
@@ -125,12 +129,12 @@ def ask():
 
         print("===================================")
         print("BACKEND ERROR:")
-        print(str(e))
+        print(repr(e))
         print("===================================")
 
         return jsonify({
-            "answer": str(e)
-        })
+            "answer": f"Backend Error: {str(e)}"
+        }), 500
 
 
 # =========================
