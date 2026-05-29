@@ -47,94 +47,10 @@ def ask():
 
     print("ASK ROUTE HIT")
 
-    try:
-
-        data = request.get_json()
-
-        query = data.get("query")
-        insurance_type = data.get("insurance_type")
-
-        print("===================================")
-        print("Question:", query)
-        print("Insurance Type:", insurance_type)
-
-        # =========================
-        # LOAD RETRIEVER
-        # =========================
-
-        print("Creating retriever...")
-
-        if insurance_type == "health":
-
-            retriever = Retriever(
-                os.path.join(BASE_DIR, "output", "health.index"),
-                os.path.join(BASE_DIR, "output", "health_chunks.json")
-            )
-
-        elif insurance_type == "car":
-
-            retriever = Retriever(
-                os.path.join(BASE_DIR, "output", "car.index"),
-                os.path.join(BASE_DIR, "output", "car_chunks.json")
-            )
-
-        else:
-
-            return jsonify({
-                "answer": "Invalid insurance type selected."
-            })
-
-        print("RETRIEVER CREATED")
-
-        # =========================
-        # LOAD GENERATOR
-        # =========================
-
-        print("Creating generator...")
-
-        generator = GroqGenerator(API_KEY)
-
-        print("GENERATOR CREATED")
-
-        # =========================
-        # SEARCH
-        # =========================
-
-        print("Starting search...")
-
-        results = retriever.search(query)
-
-        print("SEARCH COMPLETED")
-        print(f"Retrieved {len(results)} chunks")
-
-        # =========================
-        # GENERATE ANSWER
-        # =========================
-
-        print("Generating answer...")
-
-        answer = generator.generate_answer(
-            query,
-            results
-        )
-
-        print("ANSWER GENERATED")
-        print("RETURNING RESPONSE")
-
-        return jsonify({
-            "answer": answer
-        })
-
-    except Exception as e:
-
-        print("===================================")
-        print("BACKEND ERROR:")
-        print(repr(e))
-        print("===================================")
-
-        return jsonify({
-            "answer": f"Backend Error: {str(e)}"
-        }), 500
+    return jsonify({
+        "answer": "Backend is working correctly"
+    })
+    
 
 
 # =========================
